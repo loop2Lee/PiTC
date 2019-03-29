@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<style>
+		.sexy_line {
+			margin: 25px 0;
+			height: 3px;
+			width: 925px;
+			background: green;
+			background: -webkit-gradient(linear, 0 0, 100% 0, from(blue), to(blue), color-stop(50%, green));
+		}
+
+		body {
+			background-color: black;
+			color: white;
+		}
+		#popup { color: #000; background-color: #c0c0c0; }
+
+#popup a, #popup a:visited {
+	position: relative;
+	display: block;
+	text-align: left;
+	padding: 0 10px;
+	margin: 0;
+	border: 1px solid #666;
+	text-decoration: none;
+	font-size: 1em;
+	font-weight: bold;
+}
+
+#popup a span {
+	display: none;
+}
+
+#popup a:hover {
+	background-color: #e9e9e2;
+}
+
+/* the IE correction rule */
+#popup a:hover	{
+	color: #f00;
+	background-color: #e9e9e2;
+	text-indent: 0; /* added the default value */
+}
+
+#popup a:hover span {
+	display: block;
+	position: absolute;
+	right: 0px;
+	margin: 0px;
+	padding: 10px;
+	color: #335500;
+	font-weight: normal;
+	background: #e5e5e5;
+	text-align: right;
+	border: 1px solid #666;
+	z-index: 1;
+}
+
+	</style>
+	<title>Support Bot</title>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<!--Let browser know website is optimized for mobile-->
+</head>
+
+<body>
+	<div class="container">
+		<h3>
+			<img src="/f/supportsymbol.jpg" width="5%" height="5%"> Welcome to the official SupportBot website</h3>
+		<h5 style="color: #bdbdbd;">Your league of legends companion bot</h5>
+		<div class="sexy_line"></div>
+		<ul class="collapsible" data-collapsible="accordion">
+			<li class="active">
+				<div class="collapsible-header" style="background-color: #dbdbdb; color:black">
+					<i class="material-icons">expand_more</i>Bot Info</div>
+				<div class="collapsible-body" style="background-color: #dbdbdb; color:black">
+					<table class="bordered striped">
+						<tbody>
+							<tr>
+								<th>Feature</th>
+								<th>SupportBot</th>
+								<th>Others</th>
+							</tr>
+							<tr>
+								<td>Easy to use with difficult usernames</td>
+								<td>✅</td>
+								<td>❌</td>
+							</tr>
+							<tr>
+								<td>No manual refreshing of data</td>
+								<td>✅</td>
+								<td>⭕</td>
+							</tr>
+							<tr>
+								<td>Source Available</td>
+								<td>✅</td>
+								<td>❌</td>
+							</tr>
+							<tr>
+								<td>Detailed Summoner Data</td>
+								<td>✅</td>
+								<td>⭕</td>
+							</tr>
+							<tr>
+								<td>Champion Information</td>
+								<td>❌</td>
+								<td>✅</td>
+							</tr>
+							<tr>
+								<td>Patch Information</td>
+								<td>❌</td>
+								<td>✅</td>
+							</tr>
+						</tbody>
+					</table>
+					<br><br>Add our bot to your server
+					<a target="_blank" href="https://discordapp.com/oauth2/authorize?client_id=398355288123506689&permissions=0&scope=bot">
+					here </a><br><br>
+				Join our support server
+					<a target="_blank" href="https://discordapp.com/invite/MTqDXvB">here <img src="https://discordapp.com/api/guilds/384552678161645568/embed.png" alt="current users"></a><br><br>
+				View the source code
+					<a target="_blank" href="https://github.com/iaace-NA/SupportBot/">here</a>
+				</div>
+			</li>
+			<li>
+				<div class="collapsible-header" style="background-color: #dbdbdb; color:black">
+					<i class="material-icons">expand_more</i>General Commands</div>
+				<div class="collapsible-body" style="background-color: #dbdbdb; color:black">
+					<ul class="browser-default">
+						<li><code>&lt;&gt;</code> indicate required parameters and
+						<code>[]</code> indicate optional parameters<br></li>
+						<li>"ign" means League of Legends username<br></li>
+						<li>what does <code>[ign resolvable]</code> mean?
+							<ul class="browser-default">
+								<li><code>[]</code>: nothing needs to be specified if you want to pull up your own information</li>
+								<li><code>ign</code>: the username (whatever it is)</li>
+								<li><code>$shortcut</code>: any $shortcut set for a user using <code>Lsetshortcut</code></li>
+								<li><code>@mention</code>: mention any other discord user</li>
+								<li><code>^</code>: the summoner whose information was most recently requested</li>
+							</ul>
+						</li>
+						<li>what does <code>&lt;ign list resolvable&gt;</code> mean?
+							<ul class="browser-default">
+								<li><code>ign1,ign2,ign3...ign10</code>: comma separated list of usernames</li>
+								<li><code>ign1,$shortcut2,$shortcut3,...ign10</code>: any mix of igns and $shortcuts, comma separated</li>
+								<li>lobby/champ select chat: copy and paste the chat from your premade lobby or champion select</li>
+								<li>post game chat: copy and paste the chat from after the game ends</li>
+							</ul>
+						</li>
+						<li>command use is not case sensitive.</li>
+					</ul><br>
+					<table class="bordered striped">
+						<tbody>
+							<tr>
+								<th>
+									<pre>COMMANDS v1.5.1</pre>
+								</th>
+								<th>ACTION</th>
+								<th>EXAMPLE</th>
+							</tr>
+							<tr>
+								<td>
+									<pre>&lt;region&gt; [ign resolvable]
+&lt;op.gg link&gt;</pre>
+								</td>
+								<td>
+									<img class="alignnone" style="width: 20px; height: 20px;" src="https://supportbot.tk/f/Licon.png" alt="" />Shows summoner's stats</td>
+								<td>
+									<div id="popup"><code><a href="https://supportbot.tk/f/1.3-na-command.png">na routuro<span><img src="https://supportbot.tk/f/1.3-na-command.png" /></span></a></code></div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lhelp</pre>
+								</td>
+								<td>Displays an information card on how to use supportbot</td>
+								<td>
+									<pre>Lhelp</pre>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Linvite</pre>
+								</td>
+								<td>Provides information on how to add SupportBot to a different server</td>
+								<td>
+									<pre>Linvite</pre>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>matchhistory &lt;region&gt; [ign resolvable]
+mh &lt;region&gt; [ign resolvable]</pre>
+								</td>
+								<td>
+									<img style="width: 20px; height: 20px;" src="https://supportbot.tk/f/Licon.png" alt="" />Displays basic information about the 5 most recent games played</td>
+								<td>
+									<div id="popup"><code><a href="https://supportbot.tk/f/1.3-mh-na-command.png">mh na routuro<span><img src="https://supportbot.tk/f/1.3-mh-na-command.png" /></span></a></code></div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>matchhistory&lt;number&gt; &lt;region&gt; [ign resolvable]
+mh&lt;number&gt; &lt;region&gt; [ign resolvable]</pre>
+								</td>
+								<td>
+									<img style="width: 20px; height: 20px;" src="https://supportbot.tk/f/Licon.png" alt="" />Displays detailed information about one of your most recently played games.</td>
+								<td>
+									<div id="popup"><code><a href="https://supportbot.tk/f/1.3-mh1-na-command.png">mh1 na routuro<span><img src="https://supportbot.tk/f/1.3-mh1-na-command.png" /></span></a></code></div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>livegame &lt;region&gt; [ign resolvable]
+lg &lt;region&gt; [ign resolvable]
+currentgame &lt;region&gt; [ign resolvable]
+cg &lt;region&gt; [ign resolvable]
+livematch &lt;region&gt; [ign resolvable]
+lm &lt;region&gt; [ign resolvable]
+currentmatch &lt;region&gt; [ign resolvable]
+cm &lt;region&gt; [ign resolvable]</pre>
+								</td>
+								<td>
+									<img style="width: 20px; height: 20px;" src="https://supportbot.tk/f/Licon.png" alt="" />Shows information about a game currently being played</td>
+								<td>
+									<div id="popup"><code><a href="https://supportbot.tk/f/1.3-lg-na-command.png">lg na turnipgreen2<span><img src="https://supportbot.tk/f/1.3-lg-na-command.png" /></span></a></code></div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>championmastery &lt;region&gt; [ign resolvable]
+mastery &lt;region&gt; [ign resolvable]</pre>
+								</td>
+								<td>
+									<img style="width: 20px; height: 20px;" src="https://supportbot.tk/f/Licon.png" alt="" />Gets the top 90 mastery champions for a summoner.</td>
+								<td>
+									<div id="popup"><code><a href="https://supportbot.tk/f/1.5-mastery-command.png">mastery kr hideonbush<span><img src="https://supportbot.tk/f/1.5-mastery-command.png" /></span></a></code></div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>multi &lt;region&gt; &lt;ign list resolvable&gt;
+m &lt;region&gt; &lt;ign list resolvable&gt;</pre>
+								</td>
+								<td>
+									<img style="width: 20px; height: 20px;" src="https://supportbot.tk/f/Licon.png" alt="" />Shows information about multiple users. If the contents of a post-game or pre-game lobby are posted, statistics
+									will be retrieved for those present in the game/lobby.</td>
+								<td>
+									<div id="popup"><code><a href="https://supportbot.tk/f/1.3-m-na-command.png">m na iaace, routuro, billupillu<span><img src="https://supportbot.tk/f/1.3-m-na-command.png" /></span></a></code></div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>fairteamgenerator &lt;region&gt; &lt;ign list resolvable&gt;
+teamgenerator &lt;region&gt; &lt;ign list resolvable&gt;
+ftg &lt;region&gt; &lt;ign list resolvable&gt;
+tg &lt;region&gt; &lt;ign list resolvable&gt;</pre>
+								</td>
+								<td>
+									<img style="width: 20px; height: 20px;" src="https://supportbot.tk/f/Licon.png" alt="" />Generates the fairest teams possible (for a custom game) for a list of usernames based on experience, skill, or random.</td>
+								<td>
+									<div id="popup"><code><a href="https://supportbot.tk/f/1.5.1-ftg-command.png">ftg na iaace, routuro, billupillu<span><img src="https://supportbot.tk/f/1.5.1-ftg-command.png" /></span></a></code></div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>
+ftgd &lt;region&gt; &lt;ign list resolvable&gt;
+tgd &lt;region&gt; &lt;ign list resolvable&gt;</pre>
+								</td>
+								<td>
+									<img style="width: 20px; height: 20px;" src="https://supportbot.tk/f/Licon.png" alt="" />Same as above but with added statistics.</td>
+								<td>
+									<div id="popup"><code><a href="https://supportbot.tk/f/1.5.1-ftgd-command.png">ftgd na jemxas, routuro, billupillu, wastedyotime, shmikal, turnipgreen, hatredsc2<span><img src="https://supportbot.tk/f/1.5.1-ftgd-command.png" /></span></a></code></div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>
+mmr &lt;region&gt; &lt;ign resolvable&gt;</pre>
+								</td>
+								<td>
+									<img style="width: 20px; height: 20px;" src="https://supportbot.tk/f/Licon.png" alt="" />Delivers a joke based on random mmr.</td>
+								<td>
+									<div id="popup"><code><a href="https://supportbot.tk/f/1.5-mmr-command.png">mmr na<span><img src="https://supportbot.tk/f/1.5-mmr-command.png" /></span></a></code></div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>service status &lt;region&gt;
+servicestatus &lt;region&gt;
+status &lt;region&gt;
+ss &lt;region&gt;</pre>
+								</td>
+								<td>
+									<img style="width: 20px; height: 20px;" src="https://supportbot.tk/f/Licon.png" alt="" />Shows information about the League of Legends service status</td>
+								<td>
+									<div id="popup"><code><a href="https://supportbot.tk/f/1.3-ss-na-command.png">ss na<span><img src="https://supportbot.tk/f/1.3-ss-na-command.png" /></span></a></code></div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lcomplain &lt;text&gt;</pre>
+								</td>
+								<td>Tell us why SupportBot isn't working out for you.</td>
+								<td>
+									<code>Lcomplain supportbot is too slow</code>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lsuggest &lt;text&gt;</pre>
+								</td>
+								<td>Give us a suggestion.</td>
+								<td>
+									<code>Lsuggest make this a new command</code>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lpraise &lt;text&gt;</pre>
+								</td>
+								<td>Give us a pat on the back.</td>
+								<td>
+									<code>Lpraise supportbot is great!</code>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lask &lt;text&gt;
+Lquestion &lt;text&gt;</pre>
+								</td>
+								<td>Send us your questions.</td>
+								<td>
+									<code>Lask when's the next update coming?</code>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lping [text]</pre>
+								</td>
+								<td>Checks SupportBot response time. If text follows
+									<code>Lping</code>, then the response will be a repeat of the text.</td>
+								<td>
+									<code>Lping</code>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</li>
+			<li>
+				<div class="collapsible-header" style="background-color: #dbdbdb; color:black">
+					<i class="material-icons">expand_more</i>Username Tools: Links and Shortcuts</div>
+				<div class="collapsible-body" style="background-color: #dbdbdb; color:black">
+					<ul class="browser-default">
+						<li><code>&lt;&gt;</code> indicate required parameters and
+						<code>[]</code> indicate optional parameters<br></li>
+						<li>"ign" means League of Legends username<br></li>
+						<li>command use is not case sensitive.</li>
+					</ul><br>
+					<table class="bordered striped">
+						<tbody>
+							<tr>
+								<th>
+									<pre>COMMANDS v1.5.1</pre>
+								</th>
+								<th>ACTION</th>
+								<th>EXAMPLE</th>
+							</tr>
+							<tr>
+								<td>
+									<pre>Llink &lt;region&gt; &lt;ign&gt;</pre>
+								</td>
+								<td>If your LoL ign is different from your discord username, you can set your LoL ign using this command, and SupportBot
+									will remember it.</td>
+								<td>
+									<pre>Llink na routuro</pre>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lgetlink
+Lgl</pre>
+								</td>
+								<td>Tells you what LoL username you currently have registered with SupportBot</td>
+								<td>
+									<pre>Lgl</pre>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lunlink
+Lremovelink</pre>
+								</td>
+								<td>SupportBot forgets your preferred username.</td>
+								<td>
+									<pre>Lunlink</pre>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lshortcuts
+Lshortcut</pre>
+								</td>
+								<td>Displays a list of nicknames you've set for friends with hard to spell names. All shortcuts begin with an "$".</td>
+								<td>
+									<pre>Lshortcuts</pre>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lsetshortcuts $&lt;nickname&gt; &lt;ign&gt;
+Lsetshortcut $&lt;nickname&gt; &lt;ign&gt;
+Lss $&lt;nickname&gt; &lt;ign&gt;
+Lcreateshortcut $&lt;nickname&gt; &lt;ign&gt;
+Laddshortcut $&lt;nickname&gt; &lt;ign&gt;</pre>
+								</td>
+								<td>Add a nickname to your preferences.</td>
+								<td>
+									<pre>Lss $jon Scùffed</pre>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lremoveshortcut $&lt;nickname&gt;
+Lrs $&lt;nickname&gt;
+Ldeleteshortcut $&lt;nickname&gt;
+Lds $&lt;nickname&gt;</pre>
+								</td>
+								<td>Remove a nickname from your preferences.</td>
+								<td>
+									<pre>Lrs $jon</pre>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lremoveallshortcuts</pre>
+								</td>
+								<td>Remove all nicknames from your preferences.</td>
+								<td>
+									<pre>Lremoveallshortcuts</pre>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</li>
+			<li>
+				<div class="collapsible-header" style="background-color: #dbdbdb; color:black">
+					<i class="material-icons">expand_more</i>Server Settings</div>
+				<div class="collapsible-body" style="background-color: #dbdbdb; color:black">
+					<ul class="browser-default">
+						<li><code>&lt;&gt;</code> indicate required parameters and
+						<code>[]</code> indicate optional parameters</li>
+						<li>"ign" means League of Legends username</li>
+						<li>command use is not case sensitive.</li>
+						Permissions:
+							<ul class="browser-default">
+								<li style="color:#cc00ff">Server Owner</li>
+								<li style="color:#ff0000">Server Admin:
+									<ul class="browser-default">
+										<li>Kick user</li>
+										<li>Manage messages</li>
+										<li>Ban user</li>
+										<li>Manage roles</li>
+										<li>Manage channels</li>
+									</ul>
+								</li>
+								<li style="color:#ff8800">Server Moderator:
+									<ul class="browser-default">
+										<li>Kick user</li>
+										<li>Manage messages</li>
+									</ul>
+								</li>
+								<li style="color:#999999">Bot Commander: Has a role named "bot commander"</li>
+							</ul>
+						</ul>
+					<br>
+					<table class="bordered striped">
+						<tbody>
+							<tr>
+								<th>
+									<pre>COMMANDS v1.5.1</pre>
+								</th>
+								<th>ACTION</th>
+								<th>DEFAULT</th>
+								<th>EXAMPLE</th>
+							</tr>
+							<tr>
+								<td>
+									<span style="color: #ff0000"><pre>supportbotprefix [new prefix]</pre></span>
+								</td>
+								<td>Changes the prefix for supportbot. If none is specified, supportbot will operate without using prefixes.</td>
+								<td><pre>L</pre></td>
+								<td><code>supportbotprefix !</code></td>
+							</tr>
+							<tr>
+								<td>
+									<span style="color: #ff8800"><pre>Lsetting auto-opgg &lt;on/off&gt;</pre></span>
+								</td>
+								<td>Toggles automatic summoner information when an op.gg link is sent.</td>
+								<td>on</td>
+								<td><code>lsetting auto-opgg off</code></td>
+							</tr>
+							<tr>
+								<td>
+									<span style="color: #ff0000"><pre>Lsetting force-prefix &lt;on/off&gt;</pre></span>
+								</td>
+								<td>Force using a prefix for LoL statistics command that do not require one. (<code>mastery</code> <-> <code>Lmastery</code>)</td>
+								<td>off</td>
+								<td><code>lsetting force-prefix on</code></td>
+							</tr>
+							<tr>
+								<td>
+									<span style="color: #ff0000"><pre>Lsetting release-notifications &lt;on/off&gt;</pre></span>
+								</td>
+								<td>Show SupportBot release notes in your server.</td>
+								<td>on</td>
+								<td><code>lsetting release-notifications off</code></td>
+							</tr>
+							<tr>
+								<td>
+									<span style="color: #ff0000"><pre>supportbot settings reset all</pre></span>
+								</td>
+								<td>Reset all server settings to default.</td>
+								<td></td>
+								<td><code>supportbot settings reset all</code></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</li>
+			<li>
+				<div class="collapsible-header" style="background-color: #dbdbdb; color:black">
+					<i class="material-icons">expand_more</i>Global Management Commands</div>
+				<div class="collapsible-body" style="background-color: #dbdbdb; color:black">
+					<code>&lt;&gt;</code> indicate required parameters and
+					<code>[]</code> indicate optional parameters<br>
+					"ign" means League of Legends username<br>
+					command use is not case sensitive.
+					<table class="bordered striped">
+						<tbody>
+							<tr>
+								<th>
+									<pre>COMMANDS v1.5.1</pre>
+								</th>
+								<th>ACTION</th>
+								<th>OWNER PERMISSIONS REQUIRED</th>
+							</tr>
+							<tr>
+								<td>
+									<pre>Leval &lt;javascript code&gt;</pre>
+								</td>
+								<td>Evaluates javascript and sends the result as a reply.</td>
+								<td>
+									<span style="color: #ff0000;">Yes</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>iapi eval &lt;javascript code&gt;</pre>
+								</td>
+								<td>Evaluates javascript on the internal API process and sends the result as a reply.</td>
+								<td>
+									<span style="color: #ff0000;">Yes</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lnotify &lt;message&gt;</pre>
+								</td>
+								<td>Sends a message in each server SupportBot is connected to.</td>
+								<td>
+									<span style="color: #ff0000;">Yes</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Llink &lt;region&gt; &lt;ign&gt; &lt;@user&gt;</pre>
+								</td>
+								<td>Sets a link for a different user.</td>
+								<td>
+									<span style="color: #ff0000;">Yes</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lunlink &lt;@user&gt;
+Lremovelink &lt;@user&gt;</pre></td>
+								<td>Removes a link for a different user.</td>
+								<td>
+									<span style="color: #ff0000;">Yes</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lgetlink &lt;@user&gt;
+Lgl &lt;@user&gt;</pre></td>
+								<td>Retrieves a link for a different user.</td>
+								<td>
+									<span style="color: #ff0000;">Yes</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lbanuser &lt;user id&gt; &lt;duration&gt; &lt;reason&gt;</pre></td>
+								<td>Bans a user from using SupportBot. Set duration as
+									<code>0</code> for a permaban. Accepted time modifiers are "H" hours and "D" days.</td>
+								<td>
+									<span style="color: #ff0000;">Yes</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lbanserver &lt;server id&gt; &lt;reason&gt;</pre></td>
+								<td>Bans a server from using SupportBot. Set duration as
+									<code>0</code> for a permaban. Accepted time modifiers are "H" hours and "D" days. If a server is issued a permaban, SupportBot
+									MAY leave the server on its own.</td>
+								<td>
+									<span style="color: #ff0000;">Yes</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lwarnuser &lt;user id&gt; &lt;reason&gt;</pre></td>
+								<td>Warns a user to not abuse SupportBot.</td>
+								<td>
+									<span style="color: #ff0000;">Yes</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lwarnserver &lt;server id&gt; &lt;reason&gt;</pre></td>
+								<td>Warns a server to not abuse SupportBot.</td>
+								<td>
+									<span style="color: #ff0000;">Yes</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lnoteuser &lt;user id&gt; &lt;reason&gt;</pre></td>
+								<td>Quietly makes an internal note about a user.</td>
+								<td>
+									<span style="color: #ff0000;">Yes</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lnoteserver &lt;server id&gt; &lt;reason&gt;</pre>
+								</td>
+								<td>Quietly makes an internal note about a server.</td>
+								<td>
+									<span style="color: #ff0000;">Yes</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Luserhistory &lt;user id&gt;</pre>
+								</td>
+								<td>Views user disciplinary records and notes.</td>
+								<td>
+									<span style="color: #ff0000;">Yes</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lserverhistory &lt;server id&gt;</pre>
+								</td>
+								<td>Views server disciplinary records and notes.</td>
+								<td>
+									<span style="color: #ff0000;">Yes</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lunbanuser &lt;user id&gt;</pre>
+								</td>
+								<td>Unbans an actively banned user.</td>
+								<td>
+									<span style="color: #ff0000;">Yes</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lunbanserver &lt;server id&gt;</pre>
+								</td>
+								<td>Unbans an actively banned server.</td>
+								<td>
+									<span style="color: #ff0000;">Yes</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lactionreport &lt;admin user id&gt;</pre>
+								</td>
+								<td>Shows disciplinary actions issued by any SupportBot admin.</td>
+								<td>
+									<span style="color: #ff0000;">Yes</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lmail &lt;user id&gt; &lt;text&gt;</pre>
+								</td>
+								<td>Send a message to a user, with language flags.</td>
+								<td>
+									<span style="color: #ff0000;">Yes</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lapprove &lt;message id&gt;</pre>
+								</td>
+								<td>Approve a message in the external feedback channel for public viewing.</td>
+								<td>
+									<span style="color: #ff0000;">Yes</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lstats</pre>
+								</td>
+								<td>Shows the shard ID of the command-receiving shard.</td>
+								<td>
+									<span style="color: #ff0000;">Yes</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lsummonerdebug &lt;region&gt; &lt;ign&gt;
+Lsd &lt;region&gt; &lt;ign&gt;</pre>
+								</td>
+								<td>Gets account IDs and summoner IDs for LoL.</td>
+								<td>
+									<span style="color: #00ff00;">No</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Ltestembed</pre>
+								</td>
+								<td>Sends an embed for debugging purposes.</td>
+								<td>
+									<span style="color: #00ff00;">No</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>iping</pre>
+								</td>
+								<td>Shows ping times on the connection to the internal api server.</td>
+								<td>
+									<span style="color: #00ff00;">No</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lpermissionstest [@user]
+Lpt [@user]</pre>
+								</td>
+								<td>Shows whether or not someone has elevated permissions in the SupportBot context.</td>
+								<td>
+									<span style="color: #00ff00;">No</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<pre>Lowner
+Lowners</pre>
+								</td>
+								<td>Identifies the owners and owner ids of SupportBot.</td>
+								<td>
+									<span style="color: #00ff00;">No</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<pre>TERMS OF SERVICE
+– Don’t be a bot on a user account and use SupportBot.
+– Don’t abuse bugs. If you find a bug, please report it to us.
+– Don’t spam useless feedback.
+– If you do not want to use SupportBot, let us know and we’ll opt you out of our services.
+– We reserve the right to ban users and servers from using SupportBot at our discretion.
+- We collect data on SupportBot usage to improve user experience and to prevent abuse.
+
+We are not affiliated with Riot Games.
+
+For additional help, please visit <a target="_blank" href="https://discord.gg/MTqDXvB">https://discord.gg/MTqDXvB</a></pre>
+<script type="text/javascript" src="https://supportbot.tk/f/index.js"></script>
+</body>
+
+</html>
