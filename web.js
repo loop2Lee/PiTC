@@ -94,41 +94,8 @@ function exists(anyObject) {//general utility function
 		return false;
 	}
 }
-function changeBaseTo62(number) {
-	number = parseInt(number);//convert to string
-	const dictionary = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	let answer = "";
-	while (number > 0) {
-		answer = dictionary.substring(number % 62, (number % 62) + 1) + answer;
-		number = (number - (number % 62)) / 62;
-	}
-	return answer;
-}
-function changeBaseTo55(number) {
-	number = parseInt(number);//convert to string
-	const dictionary = "23456789abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ";
-	let answer = "";
-	while (number > 0) {
-		answer = dictionary.substring(number % 55, (number % 55) + 1) + answer;
-		number = (number - (number % 55)) / 55;
-	}
-	return answer;
-}
-function digitBase55(number) {
-	const dictionary = "23456789abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ";
-	return dictionary[number];
-}
 function assert(value) {
 	if (value !== true) {
 		throw new Error("Assertion failed");
 	}
-}
-function randomBase55(entropy) {// in bits
-	entropy = entropy ? 45 : 23;
-	let temp = "";
-	while (temp.length < entropy) {
-		const candidate = crypto.randomBytes(1)[0] % 55;
-		temp += digitBase55(candidate);
-	}
-	return temp;
 }
