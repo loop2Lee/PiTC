@@ -46,6 +46,22 @@ function ready() {
 	serveWebRequest('/', function (req, res) {
 		res.sendFile(__dirname + "/static/index.html");
 	});
+	serveWebRequest("/report", (req, res, next) => {//expects query parameter ?t=&id=
+		const reported_temperature = parseInt(req.query.t);
+		fs.writeFile("temperature.log", req.query.id + "," + new Date().getTime() + "," + reported_temperature, { flag: "a" }, e => {
+			if (e) {
+				console.error(e);
+			}
+		});
+		let ans = {};
+		if (reported_temperature > 80) {
+			ans.fan = true;
+		}
+		else {
+			ans.fan = false;
+		}
+		res.json(ans);
+	});
 	serveWebRequest(["/f/:filename"], function (req, res, next) {//retrieve file
 		fs.exists("./fs/" + req.params.filename, function (valid) {
 			if (valid) {//b and d
