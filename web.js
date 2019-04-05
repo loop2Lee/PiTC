@@ -62,6 +62,9 @@ function ready() {
 		}
 		res.json(ans);
 	});
+	serveWebRequest("/history", (req, res, next) => {//expects optional query parameter ?ids=
+		//
+	});
 	serveWebRequest(["/f/:filename"], function (req, res, next) {//retrieve file
 		fs.exists("./fs/" + req.params.filename, function (valid) {
 			if (valid) {//b and d
