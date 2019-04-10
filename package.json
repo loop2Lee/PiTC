@@ -1,0 +1,22 @@
+{
+  "name": "pitc",
+  "version": "1.0.0",
+  "description": "Node.js Web Server for Raspberry Pi Central Control Unit",
+  "main": "web.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iaace-NA/PiTC.git"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/iaace-NA/PiTC/issues"
+  },
+  "homepage": "https://github.com/iaace-NA/PiTC#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
