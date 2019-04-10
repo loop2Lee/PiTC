@@ -73,7 +73,7 @@ serveWebRequest("/history", (req, res, next) => {//expects optional query parame
 				ans.push(rows);
 			}
 			if (req.query.f == "json") {
-				toJSON(ans);
+				ans = toJSON(ans);
 				res.json(ans);
 			}
 			else {
@@ -83,7 +83,7 @@ serveWebRequest("/history", (req, res, next) => {//expects optional query parame
 		else {
 			if (req.query.f == "json") {
 				let rows = data.split("\n");
-				toJSON(rows);
+				rows = toJSON(rows);
 				res.json(rows);
 			}
 			else {
@@ -100,6 +100,7 @@ serveWebRequest("/history", (req, res, next) => {//expects optional query parame
 				temperature: parseFloat(value[2])
 			};
 		})
+		return obj;
 	}
 });
 serveWebRequest(["/f/:filename"], function (req, res, next) {//retrieve file
