@@ -72,12 +72,35 @@ serveWebRequest("/history", (req, res, next) => {//expects optional query parame
 			if (ids.indexOf(rows.substring(0, rows.indexOf(","))) != -1) {
 				ans.push(rows);
 			}
-			res.send("<html><head></head><body>" + ans.join("<br>") + "</body></html>").end();
+			if (req.query.f == "json") {
+				toJSON(ans);
+				res.json(ans);
+			}
+			else {
+				res.send("<html><head></head><body>" + ans.join("<br>") + "</body></html>").end();
+			}
 		}
 		else {
-			res.send("<html><head></head><body>" + data.replaceAll("\n", "<br>") + "</body></html>").end();
+			if (req.query.f == "json") {
+				let rows = data.split("\n");
+				toJSON(rows);
+				res.json(rows);
+			}
+			else {
+				res.send("<html><head></head><body>" + data.replaceAll("\n", "<br>") + "</body></html>").end();
+			}
 		}
 	});
+	function toJSON(obj) {
+		obj = obj.map((value, index, arr) => {
+			value = value.split(",");
+			return {
+				id: value[0],
+				timestamp: parseInt(value[1]),
+				temperature: parseFloat(value[2])
+			};
+		})
+	}
 });
 serveWebRequest(["/f/:filename"], function (req, res, next) {//retrieve file
 	fs.exists("./fs/" + req.params.filename, function (valid) {
