@@ -64,7 +64,7 @@ serveWebRequest("/report", (req, res, next) => {//expects query parameter ?t=&id
 	res.json(ans);
 });
 serveWebRequest("/history", (req, res, next) => {//expects optional query parameter ?ids=
-	fs.readFile("./temperature.log", (err, data) => {
+	fs.readFile("./temperature.log", "utf8", (err, data) => {
 		if (exists(req.query.ids) && req.query.ids != "") {
 			let rows = data.split("\n");
 			const ids = req.query.ids.split(",");
