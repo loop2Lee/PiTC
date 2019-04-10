@@ -94,6 +94,7 @@ serveWebRequest("/history", (req, res, next) => {//expects optional query parame
 	function toJSON(obj) {
 		obj = obj.map((value, index, arr) => {
 			value = value.split(",");
+			value = value.slice(0, value.length - 1);
 			return {
 				id: value[0],
 				timestamp: parseInt(value[1]),
