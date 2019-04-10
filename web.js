@@ -61,13 +61,18 @@ serveWebRequest("/report", (req, res, next) => {//expects query parameter ?t=&id
 });
 serveWebRequest("/history", (req, res, next) => {//expects optional query parameter ?ids=
 	fs.readFile("./temperature.log", (err, data) => {
-		let rows = data.split("\n");
-		const ids = req.query.ids.split(",");
-		let ans = [];
-		if (ids.indexOf(rows.substring(0, rows.indexOf(","))) != -1) {
-			ans.push(rows);
+		if (exists(req.query.ids) && req.query.ids != "") {
+			let rows = data.split("\n");
+			const ids = req.query.ids.split(",");
+			let ans = [];
+			if (ids.indexOf(rows.substring(0, rows.indexOf(","))) != -1) {
+				ans.push(rows);
+			}
+			res.send(ans.join("\n")).end();
 		}
-		res.send(ans.join("\n")).end();
+		else {
+			res.send(data).end();
+		}
 	});
 });
 serveWebRequest(["/f/:filename"], function (req, res, next) {//retrieve file
