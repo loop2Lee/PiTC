@@ -71,7 +71,7 @@ serveWebRequest("/history", (req, res, next) => {//expects optional query parame
 			res.send(ans.join("\n")).end();
 		}
 		else {
-			res.send(data).end();
+			res.set('Content-Type', 'text/plain').sendText(data).end();
 		}
 	});
 });
