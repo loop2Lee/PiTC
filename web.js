@@ -23,79 +23,81 @@ Number.prototype.pad = function(size) {
 }
 const fs = require("fs");
 
-let path = require('path');
-let crypto = require("crypto");
-
 const express = require("express");
 const website = express();
 let http = require("http");
 
 output("modules loaded");
-ready();
-let user_progress = {};
-function ready() {
-	website.listen(80);
-	website.use(function (req, res, next) {
-		req.setTimeout(5000);
-		//res.setHeader("Strict-Transport-Security", "max-age=0; includeSubDomains")
-		return next();
-	});
-	http.createServer({}, website).listen(80);
-	output("ready");
+website.listen(80);
+website.use(function (req, res, next) {
+	req.setTimeout(5000);
+	//res.setHeader("Strict-Transport-Security", "max-age=0; includeSubDomains")
+	return next();
+});
+http.createServer({}, website).listen(80);
+output("ready");
 
-	serveWebRequest('/', function (req, res) {
-		res.sendFile(__dirname + "/static/index.html");
-	});
-	serveWebRequest("/report", (req, res, next) => {//expects query parameter ?t=&id=
-		const reported_temperature = parseInt(req.query.t);
-		fs.writeFile("temperature.log", req.query.id + "," + new Date().getTime() + "," + reported_temperature, { flag: "a" }, e => {
-			if (e) {
-				console.error(e);
-			}
-		});
-		let ans = {};
-		if (reported_temperature > 80) {
-			ans.fan = true;
+serveWebRequest('/', function (req, res) {
+	res.sendFile(__dirname + "/static/index.html");
+});
+serveWebRequest("/report", (req, res, next) => {//expects query parameter ?t=&id=
+	const reported_temperature = parseInt(req.query.t);
+	fs.writeFile("./temperature.log", req.query.id + "," + new Date().getTime() + "," + reported_temperature + ",", { flag: "a" }, e => {
+		if (e) {
+			console.error(e);
 		}
-		else {
-			ans.fan = false;
+	});
+	let ans = {};
+	if (reported_temperature > 80) {
+		ans.fan = true;
+	}
+	else {
+		ans.fan = false;
+	}
+	res.json(ans);
+});
+serveWebRequest("/history", (req, res, next) => {//expects optional query parameter ?ids=
+	fs.readFile("./temperature.log", (err, data) => {
+		let rows = data.split("\n");
+		const ids = req.query.ids.split(",");
+		let ans = [];
+		if (ids.indexOf(rows.substring(0, rows.indexOf(","))) != -1) {
+			ans.push(rows);
 		}
-		res.json(ans);
+		res.send(ans.join("\n")).end();
 	});
-	serveWebRequest("/history", (req, res, next) => {//expects optional query parameter ?ids=
-		//
+});
+serveWebRequest(["/f/:filename"], function (req, res, next) {//retrieve file
+	fs.exists("./fs/" + req.params.filename, function (valid) {
+		if (valid) {//b and d
+			res.sendFile(__dirname + "/fs/" + req.params.filename);
+		}
+		else res.status(404).end();
 	});
-	serveWebRequest(["/f/:filename"], function (req, res, next) {//retrieve file
-		fs.exists("./fs/" + req.params.filename, function (valid) {
-			if (valid) {//b and d
-				res.sendFile(__dirname + "/fs/" + req.params.filename);
-			}
-			else res.status(404).end();
+});
+/*serveWebRequest("/favicon.ico", function(req, res, next){
+	res.sendFile(__dirname + "/static/favicon.ico");
+});*/
+serveWebRequest("*", function (req, res, next) {
+	res.status(404).end();
+});
+function serveWebRequest(branch, callback, print = true) {
+	if (typeof(branch) == "string") {
+		website.get(branch, function (req, res, next) {
+			if (print) output(req.connection.remoteAddress + " served: " + req.originalUrl);
+			callback(req, res, next);
 		});
-	});
-	/*serveWebRequest("/favicon.ico", function(req, res, next){
-		res.sendFile(__dirname + "/static/favicon.ico");
-	});*/
-	serveWebRequest("*", function (req, res, next) {
-		res.status(404).end();
-	});
-	function serveWebRequest(branch, callback, print = true) {
-		if (typeof(branch) == "string") {
-			website.get(branch, function (req, res, next) {
+	}
+	else {
+		for (let b in branch) {
+			website.get(branch[b], function(req, res, next) {
 				if (print) output(req.connection.remoteAddress + " served: " + req.originalUrl);
 				callback(req, res, next);
 			});
 		}
-		else {
-			for (let b in branch) {
-				website.get(branch[b], function(req, res, next) {
-					if (print) output(req.connection.remoteAddress + " served: " + req.originalUrl);
-					callback(req, res, next);
-				});
-			}
-		}
 	}
 }
+
 function round(num, decimal = 0) {
 	return Math.round(num * Math.pow(10, decimal)) / Math.pow(10, decimal);
 }
