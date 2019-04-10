@@ -68,7 +68,7 @@ serveWebRequest("/history", (req, res, next) => {//expects optional query parame
 			if (ids.indexOf(rows.substring(0, rows.indexOf(","))) != -1) {
 				ans.push(rows);
 			}
-			res.send(ans.join("\n")).end();
+			res.send("<html><head></head><body>" + ans.join("\n") + "</body></html>").end();
 		}
 		else {
 			res.send("<html><head></head><body>" + data + "</body></html>").end();
