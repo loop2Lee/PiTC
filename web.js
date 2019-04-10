@@ -16,6 +16,10 @@ url
 optional: node-2fa
 */
 "use strict";
+String.prototype.replaceAll = function(search, replacement) {
+	let target = this;
+	return target.replace(new RegExp(search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), replacement);
+}
 Number.prototype.pad = function(size) {
 	let s = String(this);
 	while (s.length < (size || 2)) {s = "0" + s;}
@@ -68,10 +72,10 @@ serveWebRequest("/history", (req, res, next) => {//expects optional query parame
 			if (ids.indexOf(rows.substring(0, rows.indexOf(","))) != -1) {
 				ans.push(rows);
 			}
-			res.send("<html><head></head><body>" + ans.join("\n") + "</body></html>").end();
+			res.send("<html><head></head><body>" + ans.join("<br>") + "</body></html>").end();
 		}
 		else {
-			res.send("<html><head></head><body>" + data + "</body></html>").end();
+			res.send("<html><head></head><body>" + data.replaceAll("\n", "<br>") + "</body></html>").end();
 		}
 	});
 });
