@@ -1,6 +1,7 @@
 var net = require('net');
 var client = new net.Socket();
-let request = require("request");
+let request = require('request');
+
 client.connet({
 	port:80
 });
