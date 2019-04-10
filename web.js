@@ -47,7 +47,7 @@ function ready() {
 		res.sendFile(__dirname + "/static/index.html");
 	});
 	serveWebRequest("/report", (req, res, next) => {//expects query parameter ?t=&id=
-		if (!exists(req.query.t) || !exists(req.query.id)) {
+		if (!exists(req.query.t) || !exists(req.query.id) || req.query.t == "" || req.query.id == "") {
 			return res.send("missing either id or t query parameter").status(400).end();
 		}
 		const reported_temperature = parseInt(req.query.t);
