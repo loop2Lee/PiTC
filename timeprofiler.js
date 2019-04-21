@@ -51,17 +51,17 @@ module.exports = class Profiler {
 	endAllCSV() {
 		const now = process.hrtime();
 		let answer = [];
-		answer.push(this.name + "," + this.ms(this.diff(now, this.creation_time)) + " ms,");
+		answer.push(this.name + "," + this.ms(this.diff(now, this.creation_time)) + ",");
 		for (let b = 0; b < this.events.length; ++b) {
 			let temp = {
 				name: this.events[b].name,
-				at: this.ms(this.diff(this.events[b].time, this.creation_time)) + " ms",
+				at: this.ms(this.diff(this.events[b].time, this.creation_time)),
 			};
-			if (b > 0) temp.last = this.ms(this.diff(this.events[b].time, this.events[b - 1].time)) + " ms ago";
+			if (b > 0) temp.last = this.ms(this.diff(this.events[b].time, this.events[b - 1].time));
 			if (this.events[b].type === 0);
 			else if (this.events[b].type === 1) {
-				temp.duration = this.ms(this.diff(this.events.find(e => e.name == this.events[b].name && e.type == 2).time, this.events[b].time)) + " ms";
-				temp.end = this.ms(this.diff(this.events.find(e => e.name == this.events[b].name && e.type == 2).time, this.creation_time)) + " ms";
+				temp.duration = this.ms(this.diff(this.events.find(e => e.name == this.events[b].name && e.type == 2).time, this.events[b].time));
+				temp.end = this.ms(this.diff(this.events.find(e => e.name == this.events[b].name && e.type == 2).time, this.creation_time));
 			}
 			if (this.events[b].type !== 2) answer.push(temp.name + "," + temp.duration + ",");
 		}
