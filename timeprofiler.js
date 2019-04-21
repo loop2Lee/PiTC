@@ -66,7 +66,7 @@ module.exports = class Profiler {
 			if (this.events[b].type !== 2) answer.push(temp.name + "," + temp.duration + ",");
 		}
 		this.events = [];
-		return answer.join(",");
+		return answer.join(",") + "\n";
 	}
 	diff(now, prev) {//returns ns (now - prev) (a - b)
 		return ((now[0] - prev[0]) * 1e9) + (now[1] - prev[1]);
