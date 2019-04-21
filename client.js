@@ -50,6 +50,11 @@ function exists(anyObject) {//general utility function
 		return false;
 	}
 }
+Number.prototype.pad = function(size) {
+	let s = String(this);
+	while (s.length < (size || 2)) {s = "0" + s;}
+	return s;
+}
 /*
 {
 	body:  fan: true
