@@ -68,7 +68,8 @@ serveWebRequest("/report", (req, res, next) => {//expects query parameter ?t=&id
 			console.error(e);
 		}
 		request_profiler.end("write temp.log");
-		output("\n" + ctable.getTable(request_profiler.endAllCtable()));
+		//output("\n" + ctable.getTable(request_profiler.endAllCtable()));
+		output(request_profiler.endAllCSV());
 	});
 });
 serveWebRequest("/history", (req, res, next) => {//expects optional query parameter ?ids=

@@ -48,6 +48,26 @@ module.exports = class Profiler {
 		this.events = [];
 		return answer;
 	}
+	endAllCSV() {
+		const now = process.hrtime();
+		let answer = [];
+		answer.push(this.name + "," + this.ms(this.diff(now, this.creation_time)) + " ms,");
+		for (let b = 0; b < this.events.length; ++b) {
+			let temp = {
+				name: this.events[b].name,
+				at: this.ms(this.diff(this.events[b].time, this.creation_time)) + " ms",
+			};
+			if (b > 0) temp.last = this.ms(this.diff(this.events[b].time, this.events[b - 1].time)) + " ms ago";
+			if (this.events[b].type === 0);
+			else if (this.events[b].type === 1) {
+				temp.duration = this.ms(this.diff(this.events.find(e => e.name == this.events[b].name && e.type == 2).time, this.events[b].time)) + " ms";
+				temp.end = this.ms(this.diff(this.events.find(e => e.name == this.events[b].name && e.type == 2).time, this.creation_time)) + " ms";
+			}
+			if (this.events[b].type !== 2) answer.push(temp.name + "," + temp.duration + ",");
+		}
+		this.events = [];
+		return answer.join(",");
+	}
 	diff(now, prev) {//returns ns (now - prev) (a - b)
 		return ((now[0] - prev[0]) * 1e9) + (now[1] - prev[1]);
 	}
