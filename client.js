@@ -15,7 +15,6 @@ const id = 1; //each RPi with a sensor has a unique ID
 output("client running");
 setInterval(() => {
 	getTemperature(temperature => {
-		temperature = stdout.substring(5, 7);
 		let url = "http://" + process.argv[2] + "/report?t=" + temperature + "&id=" + id;
 		request(url, (error, response, body) => {
 			let answer = JSON.parse(body);
