@@ -30,6 +30,8 @@ const fs = require("fs");
 const express = require("express");
 const website = express();
 let http = require("http");
+let ctable = require("console.table");
+let Profiler = require("./timeprofiler.js");
 
 output("modules loaded");
 website.listen(80);
@@ -45,23 +47,29 @@ serveWebRequest('/', function (req, res) {
 	res.sendFile(__dirname + "/static/index.html");
 });
 serveWebRequest("/report", (req, res, next) => {//expects query parameter ?t=&id=
+	let request_profiler = new Profiler("/report endpoint");
+	request_profiler.begin("http response");
 	if (!exists(req.query.t) || !exists(req.query.id) || req.query.t == "" || req.query.id == "") {
 		return res.status(400).send("missing either id or t query parameter").end();
 	}
 	const reported_temperature = parseInt(req.query.t);
-	fs.writeFile("temperature.log", req.query.id + "," + new Date().getTime() + "," + reported_temperature + "\n", { flag: "a" }, e => {
-		if (e) {
-			console.error(e);
-		}
-	});
 	let ans = {};
-	if (reported_temperature > 80) {
+	if (reported_temperature > 50) {
 		ans.fan = true;
 	}
 	else {
 		ans.fan = false;
 	}
 	res.json(ans);
+	request_profiler.end("http response");
+	request_profiler.begin("write temp.log");
+	fs.writeFile("temperature.log", req.query.id + "," + new Date().getTime() + "," + reported_temperature + "\n", { flag: "a" }, e => {
+		if (e) {
+			console.error(e);
+		}
+		request_profiler.end("write temp.log");
+		output("\n" + ctable.getTable(request_profiler.endAllCtable()));
+	});
 });
 serveWebRequest("/history", (req, res, next) => {//expects optional query parameter ?ids=
 	fs.readFile("./temperature.log", "utf8", (err, data) => {
@@ -72,12 +80,37 @@ serveWebRequest("/history", (req, res, next) => {//expects optional query parame
 			if (ids.indexOf(rows.substring(0, rows.indexOf(","))) != -1) {
 				ans.push(rows);
 			}
-			res.send("<html><head></head><body>" + ans.join("<br>") + "</body></html>").end();
+			if (req.query.f == "json") {
+				ans = toJSON(ans);
+				res.json(ans);
+			}
+			else {
+				res.send("<html><head></head><body>" + ans.join("<br>") + "</body></html>").end();
+			}
 		}
 		else {
-			res.send("<html><head></head><body>" + data.replaceAll("\n", "<br>") + "</body></html>").end();
+			if (req.query.f == "json") {
+				let rows = data.split("\n");
+				rows = rows.slice(0, rows.length - 1);
+				rows = toJSON(rows);
+				res.json(rows);
+			}
+			else {
+				res.send("<html><head></head><body>" + data.replaceAll("\n", "<br>") + "</body></html>").end();
+			}
 		}
 	});
+	function toJSON(obj) {
+		obj = obj.map((value, index, arr) => {
+			value = value.split(",");
+			return {
+				id: value[0],
+				timestamp: parseInt(value[1]),
+				temperature: parseFloat(value[2])
+			};
+		})
+		return obj;
+	}
 });
 serveWebRequest(["/f/:filename"], function (req, res, next) {//retrieve file
 	fs.exists("./fs/" + req.params.filename, function (valid) {
