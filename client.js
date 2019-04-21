@@ -44,7 +44,7 @@ setInterval(() => {
 				});
 			}
 		});
-	}, true);
+	}, false);
 }, 5000);
 function getTemperature(callback, random = false) {
 	if (!random) {//get CPU temperature
