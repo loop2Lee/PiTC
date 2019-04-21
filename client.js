@@ -9,7 +9,7 @@ const id = 1; //each RPi with a sensor has a unique ID
 setInterval(() => {
 	child_process.exec("/opt/vc/bin/vcgencmd measure_temp", (err, stdout, stderr) => {
 		temperature = stdout;
-		let url = "http://address:port/report?t=" + temperature + "&id=" + id;
+		let url = "http://" + process.argv[2] + "/report?t=" + temperature + "&id=" + id;
 		request(url, (error, response, body) => {
 			let answer = JSON.parse(body);
 			if (answer.fan == true) {
