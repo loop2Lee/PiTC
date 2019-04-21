@@ -2,6 +2,8 @@ var net = require('net');
 var client = new net.Socket();
 let request = require('request');
 let child_process = require("child_process");
+let ctable = require("console.table");
+let Profiler = require("./timeprofiler.js");
 Number.prototype.pad = function(size) {
 	let s = String(this);
 	while (s.length < (size || 2)) {s = "0" + s;}
@@ -14,17 +16,32 @@ Number.prototype.pad = function(size) {
 const id = 1; //each RPi with a sensor has a unique ID
 output("client running");
 setInterval(() => {
+	let report_profiler = new Profiler("report");
+	report_profiler.begin("get temperature");
 	getTemperature(temperature => {
+		report_profiler.end("get temperature");
 		let url = "http://" + process.argv[2] + "/report?t=" + temperature + "&id=" + id;
+		report_profiler.begin("http request");
 		request(url, (error, response, body) => {
+			report_profiler.end("http request");
+			report_profiler.begin("json parse");
 			let answer = JSON.parse(body);
+			report_profiler.end("json parse");
 			if (answer.fan == true) {
 				output("Temp: " + temperature + "    Fan: ON");
-				child_process.exec("python3 LIGHT_ON.py", { timeout: 5000 });
+				report_profiler.begin("python light");
+				child_process.exec("python3 LIGHT_ON.py", { timeout: 5000 }, () => {
+					report_profiler.end("python light");
+					output("\n" + ctable.getTable(report_profiler.endAllCtable()));
+				});
 			}
 			else {
 				output("Temp: " + temperature + "    Fan: OFF");
-				child_process.exec("python3 LIGHT_OFF.py", { timeout: 5000 });
+				report_profiler.begin("python light");
+				child_process.exec("python3 LIGHT_OFF.py", { timeout: 5000 }, () => {
+					report_profiler.end("python light");
+					output("\n" + ctable.getTable(report_profiler.endAllCtable()));
+				});
 			}
 		});
 	}, true);
