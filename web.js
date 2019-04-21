@@ -30,6 +30,8 @@ const fs = require("fs");
 const express = require("express");
 const website = express();
 let http = require("http");
+let ctable = require("console.table");
+let Profiler = require("./timeprofiler.js");
 
 output("modules loaded");
 website.listen(80);
@@ -45,15 +47,12 @@ serveWebRequest('/', function (req, res) {
 	res.sendFile(__dirname + "/static/index.html");
 });
 serveWebRequest("/report", (req, res, next) => {//expects query parameter ?t=&id=
+	let request_profiler = new Profiler("/report endpoint");
+	request_profiler.begin("http response");
 	if (!exists(req.query.t) || !exists(req.query.id) || req.query.t == "" || req.query.id == "") {
 		return res.status(400).send("missing either id or t query parameter").end();
 	}
 	const reported_temperature = parseInt(req.query.t);
-	fs.writeFile("temperature.log", req.query.id + "," + new Date().getTime() + "," + reported_temperature + "\n", { flag: "a" }, e => {
-		if (e) {
-			console.error(e);
-		}
-	});
 	let ans = {};
 	if (reported_temperature > 50) {
 		ans.fan = true;
@@ -62,6 +61,15 @@ serveWebRequest("/report", (req, res, next) => {//expects query parameter ?t=&id
 		ans.fan = false;
 	}
 	res.json(ans);
+	request_profiler.end("http response");
+	request_profiler.begin("write temp.log");
+	fs.writeFile("temperature.log", req.query.id + "," + new Date().getTime() + "," + reported_temperature + "\n", { flag: "a" }, e => {
+		if (e) {
+			console.error(e);
+		}
+		request_profiler.end("write temp.log");
+		output("\n" + ctable.getTable(request_profiler.endAllCtable()));
+	});
 });
 serveWebRequest("/history", (req, res, next) => {//expects optional query parameter ?ids=
 	fs.readFile("./temperature.log", "utf8", (err, data) => {
