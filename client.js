@@ -4,6 +4,7 @@ let request = require('request');
 let child_process = require("child_process");
 let ctable = require("console.table");
 let Profiler = require("./timeprofiler.js");
+let fs = require('fs');
 Number.prototype.pad = function(size) {
 	let s = String(this);
 	while (s.length < (size || 2)) {s = "0" + s;}
@@ -32,7 +33,8 @@ setInterval(() => {
 				report_profiler.begin("python light");
 				child_process.exec("python3 LIGHT_ON.py", { timeout: 5000 }, () => {
 					report_profiler.end("python light");
-					output("\n" + ctable.getTable(report_profiler.endAllCtable()));
+					//output("\n" + ctable.getTable(report_profiler.endAllCtable()));
+					fs.writeFile("timing.csv", request_profiler.endAllCSV(), { flag: "a" }, e => { console.error(e); });
 				});
 			}
 			else {
@@ -40,7 +42,8 @@ setInterval(() => {
 				report_profiler.begin("python light");
 				child_process.exec("python3 LIGHT_OFF.py", { timeout: 5000 }, () => {
 					report_profiler.end("python light");
-					output("\n" + ctable.getTable(report_profiler.endAllCtable()));
+					//output("\n" + ctable.getTable(report_profiler.endAllCtable()));
+					fs.writeFile("timing.csv", request_profiler.endAllCSV(), { flag: "a" }, e => { console.error(e); });
 				});
 			}
 		});
