@@ -55,7 +55,7 @@ serveWebRequest("/report", (req, res, next) => {//expects query parameter ?t=&id
 		}
 	});
 	let ans = {};
-	if (reported_temperature > 80) {
+	if (reported_temperature > 50) {
 		ans.fan = true;
 	}
 	else {
