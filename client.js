@@ -42,6 +42,14 @@ function output(t) {//general utility function
 		console.log(n + "." + new Date().getMilliseconds().pad(3) + " : " + t);
 	}
 }
+function exists(anyObject) {//general utility function
+	if (anyObject != null && anyObject != undefined) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
 /*
 {
 	body:  fan: true
