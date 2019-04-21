@@ -13,10 +13,12 @@ setInterval(() => {
 		request(url, (error, response, body) => {
 			let answer = JSON.parse(body);
 			if (answer.fan == true) {
-				child_process.exec("sudo python3 LIGHT_ON.py")
+				console.log("Temp: " + temp + "    Fan: ON");
+				child_process.exec("sudo python3 LIGHT_ON.py", { timeout: 5000 });
 			}
 			else {
-				child_process.exec("sudo python3 LIGHT_OFF.py")
+				console.log("Temp: " + temp + "    Fan: OFF");
+				child_process.exec("sudo python3 LIGHT_OFF.py", { timeout: 5000 });
 			}
 		});
 	});
