@@ -5,5 +5,4 @@ Node.js Web Server for Raspberry Pi Central Control Unit
 add child_process.execute
 
 4/12
-fix bugs in 'client.js'
-add csv data file function in 'timeprofiler.js'
+fix bugs in 'client.js', add csv data file function in 'timeprofiler.js'
