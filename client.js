@@ -60,7 +60,7 @@ function getTemperature(callback, mode = 3) {
 	else if (mode == 2) {//get random value for temperature
 		callback(Math.trunc(Math.random() * 100));
 	}
-	else {
+	else {//manual control of temperature
 		child_process.exec("python3 BUTTON.py", (err, stdout, stderr) => {
 			stdout = parseInt(stdout);
 			if (stdout == 1) {
