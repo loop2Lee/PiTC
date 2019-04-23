@@ -61,7 +61,7 @@ function getTemperature(callback, mode = 3) {
 		callback(Math.trunc(Math.random() * 100));
 	}
 	else {
-		child_process.exec("python3 INPUT.py", (err, stdout, stderr) => {
+		child_process.exec("python3 BUTTON.py", (err, stdout, stderr) => {
 			if (stdout == "1") {
 				m3_temperature += 5;
 			}
