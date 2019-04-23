@@ -10,6 +10,7 @@ Number.prototype.pad = function(size) {
 	while (s.length < (size || 2)) {s = "0" + s;}
 	return s;
 }
+let m3_temperature = 50;
 
 //http://address:port/report?t=&id=
 
@@ -47,17 +48,28 @@ setInterval(() => {
 				});
 			}
 		});
-	}, false);
-}, 5000);
-function getTemperature(callback, random = false) {
-	if (!random) {//get CPU temperature
+	}, 3);
+}, 400);
+function getTemperature(callback, mode = 3) {
+	if (mode == 1) {//get CPU temperature
 		child_process.exec("/opt/vc/bin/vcgencmd measure_temp", (err, stdout, stderr) => {
 			temperature = stdout.substring(5, 7);
 			callback(temperature);
 		});
 	}
-	else {//get random value for temperature
+	else if (mode == 2) {//get random value for temperature
 		callback(Math.trunc(Math.random() * 100));
+	}
+	else {
+		child_process.exec("python3 INPUT.py", (err, stdout, stderr) => {
+			if (stdout == "1") {
+				m3_temperature += 5;
+			}
+			else if (stdout == "-1") {
+				m3_temperature -= 5;
+			}
+			callback(m3_temperature);
+		});
 	}
 }
 function output(t) {//general utility function
